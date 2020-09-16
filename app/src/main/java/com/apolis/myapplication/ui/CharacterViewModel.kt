@@ -2,12 +2,12 @@ package com.apolis.myapplication.ui
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.apolis.myapplication.model.Result
 import kotlinx.coroutines.launch
 
-class CharacterViewModel : ViewModel() {
-    private val repoCharacters = RepoChars()
+class CharacterViewModel(private val repoCharacters : RepoChars) : ViewModel() {
     private val charactersObserved: MutableLiveData<List<Result>> by lazy {
         MutableLiveData<List<Result>>()
     }
@@ -24,4 +24,10 @@ class CharacterViewModel : ViewModel() {
             charactersObserved.postValue(charactersResponse)
         }
     }
+}
+class CharacterViewModelFactory(private val repo: RepoChars) : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return CharacterViewModel(repo) as T
+    }
+
 }

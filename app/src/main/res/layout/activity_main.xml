@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        android:id="@+id/constraint_layout_main_view"
+        tools:context=".ui.CharacterDisplayActivity">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="0dp"

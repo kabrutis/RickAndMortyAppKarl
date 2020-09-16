@@ -23,10 +23,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 //• The list of characters consists of several pages; can implement fetching additional pages of characters as the User scrolls
 //NOTE:
 //• The code must be shared in GitHub or BitBucket, with frequent commits.
-class MainActivity : AppCompatActivity() {
+class CharacterDisplayActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var charViewModel: CharacterViewModel
     private val adapterCharacters = AdapterCharacters(this)
+    private val repoCharacters = RepoChars()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(
@@ -43,7 +44,11 @@ class MainActivity : AppCompatActivity() {
      * initiliaze recycler view providing adapter and initial layout manager
      */
     private fun init() {
-        charViewModel = ViewModelProvider(this).get(CharacterViewModel::class.java)
+       // charViewModel = ViewModelProvider(this).get(CharacterViewModel::class.java)
+        charViewModel =
+            ViewModelProvider(this, CharacterViewModelFactory(repoCharacters)).get(
+                CharacterViewModel::class.java
+            )
         charViewModel.loadCharacters()
         recycler_view.adapter = adapterCharacters
         recycler_view.layoutManager = LinearLayoutManager(this)
