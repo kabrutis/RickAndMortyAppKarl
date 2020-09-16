@@ -24,10 +24,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var charViewModel: CharacterViewModel
-    private val adapterCharacters = AdapterCharacters()
+    private val adapterCharacters = AdapterCharacters(this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this,
+        binding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_main
         )
         charViewModel = ViewModelProvider(this).get(CharacterViewModel::class.java)
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun charactersObserved() {
         charViewModel.callCharObserver().observe(
             this, Observer {
-                if(it!= null){
+                if (it != null) {
                     adapterCharacters.setCharacterList(it)
                 }
             }
