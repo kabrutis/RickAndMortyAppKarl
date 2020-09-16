@@ -6,14 +6,19 @@ import androidx.lifecycle.viewModelScope
 import com.apolis.myapplication.model.Result
 import kotlinx.coroutines.launch
 
-class CharacterViewModel:ViewModel() {
+class CharacterViewModel : ViewModel() {
     private val repoCharacters = RepoChars()
-    private val charactersObserved: MutableLiveData<List<Result>> by lazy{
+    private val charactersObserved: MutableLiveData<List<Result>> by lazy {
         MutableLiveData<List<Result>>()
     }
+
     fun callCharObserver() = charactersObserved
 
-    fun loadCharacters(){
+    /**
+     * within scope of view model, coroutine launches calling repo fun to retrieve
+     */
+
+    fun loadCharacters() {
         viewModelScope.launch {
             val charactersResponse = repoCharacters.getRMCharacters()
             charactersObserved.postValue(charactersResponse)
